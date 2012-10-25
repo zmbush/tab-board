@@ -26,7 +26,6 @@ class Tab:
 
   def addTo(self, amount):
     f = self.openWriteLocked()
-    print "File Opened"
 
     tabs = {}
     for line in f:
@@ -39,18 +38,11 @@ class Tab:
     if self.user_name not in tabs:
       tabs[self.user_name] = 0
 
-    print "Value: " + str(tabs[self.user_name])
-    print "Adding: " + str(amount)
-
     tabs[self.user_name] += amount
-
-    print "New Value: " + str(tabs[self.user_name])
 
     for user in sorted(tabs.iterkeys()):
       f.write(user + " " + str(tabs[user]) + "\n")
 
-    print "File Closing"
-    print
     self.closeLocked(f)
 
   def value(self):
