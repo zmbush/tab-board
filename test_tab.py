@@ -4,13 +4,17 @@ from tab import *
 def test_consistency():
   def add_to_tab(amount):
     t = Tab('test_zach')
+    t2 = Tab('test_hayg')
 
     t.addTo(amount)
+    t2.removeFrom(amount)
 
   def remove_from_tab(amount):
     t = Tab('test_zach')
+    t2 = Tab('test_hayg')
 
     t.removeFrom(amount)
+    t2.addTo(amount)
 
   add = [threading.Thread(target=add_to_tab, args=(i,)) for i in range(100)]
   remove = [threading.Thread(target=remove_from_tab, args=(i,)) for i in range(100)]
@@ -32,3 +36,7 @@ def test_consistency():
   for r in remove:
     assert not r.isAlive()
   assert Tab('test_zach').value() == 0
+  assert Tab('test_hayg').value() == 0
+
+def test_rm():
+  Tab('').rmTabFile()

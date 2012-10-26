@@ -1,10 +1,14 @@
 import fcntl
+import os
 
 class Tab:
   def __init__(self, name, f="test_file.tab"):
     self.user_name = name
     self.tab_file = f
     open(self.tab_file, 'a').close()
+
+  def rmTabFile(self):
+    os.remove(self.tab_file)
 
   def openReadLocked(self):
     fd = open(self.tab_file, 'r+')
@@ -41,7 +45,7 @@ class Tab:
     tabs[self.user_name] += amount
 
     for user in sorted(tabs.iterkeys()):
-      f.write(user + " " + str(tabs[user]) + "\n")
+      f.write("%-50s%07.2f\n" % (user, tabs[user]))
 
     self.closeLocked(f)
 
